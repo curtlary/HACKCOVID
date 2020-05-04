@@ -1,1 +1,1 @@
-https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyAQZuXPgxZL9RfH297lBpZbqih5mqrRrlo&location=-33.8670522,151.1957362&radius=500&type=restaurant
+https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=ACCESS_KEY&location=-33.8670522,151.1957362&radius=500&type=restaurant
