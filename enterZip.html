@@ -33142,12 +33142,13 @@ function getPercentOpen(zipCode){
 		var total = 0;
 	
 	for(var j in types){
-		var empty = "";
+		var urlStart = "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDT6IX-t-sA7_h8vc8CcaLvV5DhXPXwMvY&location=";
 
 		var json_List = JSON.parse(Get(
-			empty.concat("https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDT6IX-t-sA7_h8vc8CcaLvV5DhXPXwMvY&location=", latitude,",",longitude,"&radius=5000&type=", types[i])));
-		console.log(json_List);
+			urlStart.concat(latitude,",",longitude,"&radius=5000&type=", types[j])));
 
+		console.log(types[j]);
+		console.log(json_List);
 		var places = json_List.results;
 		console.log(places);
 
@@ -33158,12 +33159,14 @@ function getPercentOpen(zipCode){
 				if(places[i].opening_hours.open_now){
 					open++;
 					}
+					total++;
 				}
-			total++;
 			}
 		}
+		console.log(open);
+		console.log(total);
 	return (open/total);
-}
+	}
 </script>
 </form>
 </body>
