@@ -33139,24 +33139,24 @@ function getPercentOpen(zipCode){
 	};  
 
 		var open = 0;
-		var total = 0;
+		var closed = 0;
 		var openNames = [];
 		var closedNames = [];
 
 	function alreadyNamed(nameIN){
 		var named = false;
-		for(var i in openNames){
-			if(nameIN === openNames[i]){
+		for(var a in openNames){
+			if(nameIN === openNames[a]){
 				named = true;
 				break
 			}
 		}
 		if(!named){
-			for(var i in closedNames){
-			if(nameIN === closedNames[i]){
-				named = true;
-				break
-				}
+			for(var b in closedNames){
+				if(nameIN === closedNames[b]){
+					named = true;
+					break
+					}
 			}
 		}
 		return named;
@@ -33169,22 +33169,23 @@ function getPercentOpen(zipCode){
 			urlStart.concat(latitude,",",longitude,"&radius=5000&type=", types[j])));
 
 		console.log(types[j]);
-		console.log(json_List);
+		//console.log(json_List);
 		var places = json_List.results;
-		console.log(places);
+		//console.log(places);
 
 		for(var i in places){
-			if(!alreadyNamed(places[i.name])){
+			if(!alreadyNamed(places[i].name)){
 				//console.log(places[i].name);
 				if(places[i].hasOwnProperty('opening_hours')){
-					console.log(places[i].opening_hours.open_now);
+					
 					if(places[i].opening_hours.open_now){
 						open++;
 						openNames.push(places[i].name)
 						} else{
+							console.log(places[i].opening_hours.open_now);
 							closedNames.push(places[i].name);
+							closed++;
 						}
-						total++;
 					}
 				}
 			}
@@ -33194,7 +33195,9 @@ function getPercentOpen(zipCode){
 		console.log(open);
 		console.log('----------closed-----------');
 		console.log(closedNames);
+		console.log(closed);		
 		console.log('----------total-----------');
+		var total = open + closed;
 		console.log(total);
 	return (open/total);
 	}
