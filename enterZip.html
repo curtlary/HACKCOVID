@@ -33114,6 +33114,11 @@ function getPercentOpen(zipCode){
 		{"zip":99929,"lat":56.3695,"lng":-131.93648}]
 	}
 
+	//initiate types array
+	if(true){
+		var types = ["accounting", "airport", "amusement_park", "aquarium", "art_gallery", "atm", "bakery", "bank", "bar", "beauty_salon", "bicycle_store", "book_store", "bowling_alley", "bus_station", "cafe", "campground", "car_dealer", "car_rental", "car_repair", "car_wash", "casino", "cemetery", "church", "city_hall", "clothing_store", "convenience_store", "courthouse", "dentist", "department_store", "doctor", "drugstore", "electrician", "electronics_store", "embassy", "fire_station", "florist", "funeral_home", "furniture_store", "gas_station", "grocery_or_supermarket", "gym", "hair_care", "hardware_store", "hindu_temple", "home_goods_store", "hospital", "insurance_agency", "jewelry_store", "laundry", "lawyer", "library", "light_rail_station", "liquor_store", "local_government_office", "locksmith", "lodging", "meal_delivery", "meal_takeaway", "mosque", "movie_rental", "movie_theater", "moving_company", "museum", "night_club", "painter", "park", "parking", "pet_store", "pharmacy", "physiotherapist", "plumber", "police", "post_office", "primary_school", "real_estate_agency", "restaurant", "roofing_contractor", "rv_park", "school", "secondary_school", "shoe_store", "shopping_mall", "spa", "stadium", "storage", "store", "subway_station", "supermarket", "synagogue", "taxi_stand", "tourist_attraction", "train_station", "transit_station", "travel_agency", "university", "veterinary_care", "zoo"];
+		}
+
 	var latitude;
 	var longitude;
 	for(var i in zip2){
@@ -33133,28 +33138,30 @@ function getPercentOpen(zipCode){
 	    return Httpreq.responseText;          	
 	};  
 
-	var empty = "";
+		var open = 0;
+		var total = 0;
+	
+	for(var j in types){
+		var empty = "";
 
-	var json_List = JSON.parse(Get(
-		empty.concat("https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDT6IX-t-sA7_h8vc8CcaLvV5DhXPXwMvY&location=", latitude,",",longitude,"&radius=5000&type=restaurant")));
-	console.log(json_List);
+		var json_List = JSON.parse(Get(
+			empty.concat("https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDT6IX-t-sA7_h8vc8CcaLvV5DhXPXwMvY&location=", latitude,",",longitude,"&radius=5000&type=", types[i])));
+		console.log(json_List);
 
-	var places = json_List.results;
-	console.log(places);
+		var places = json_List.results;
+		console.log(places);
 
-	var open = 0;
-	var total = 0;
-
-	for(var i in places){ 
-		console.log(places[i].name);
-		if(places[i].hasOwnProperty('opening_hours')){
-			console.log(places[i].opening_hours.open_now);
-			if(places[i].opening_hours.open_now){
-				open++;
+		for(var i in places){ 
+			console.log(places[i].name);
+			if(places[i].hasOwnProperty('opening_hours')){
+				console.log(places[i].opening_hours.open_now);
+				if(places[i].opening_hours.open_now){
+					open++;
+					}
+				}
+			total++;
 			}
 		}
-	total++;
-	}
 	return (open/total);
 }
 </script>
