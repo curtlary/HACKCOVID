@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html>
 <body>
-
+<center>
 <h1>Enter Zip Code</h1>
 
-<form oninput = "percent.value=getPercentOpen(zip.value)">
+
+
 Zip Code: <input type="number" id="zip" value="0"> <br>
 
-Percent Open: <output name="percent"></output>
+<button onclick="getPercentOpen(zip.value)">G0!</button><br>
 
+Percent Open: <p id="percent"></p>
+
+Open Stores: <p id="openOnes"></p>
+
+Closed Stores: <p id="closedOnes"></p>
 
 <script>
 function getPercentOpen(zipCode){
@@ -33189,6 +33195,8 @@ function getPercentOpen(zipCode){
 					}
 				}
 			}
+		var total = open + closed;
+		document.getElementById("percent").innerHTML = (open/total) ;
 		}
 		console.log('----------open-----------');
 		console.log(openNames);
@@ -33199,9 +33207,14 @@ function getPercentOpen(zipCode){
 		console.log('----------total-----------');
 		var total = open + closed;
 		console.log(total);
+
+		document.getElementById("openOnes").innerHTML = (openNames);
+		document.getElementById("closedOnes").innerHTML = (closedNames);
+
 	return (open/total);
 	}
-</script>
-</form>
+</script><br>
+
+</center>
 </body>
 </html>
