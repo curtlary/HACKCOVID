@@ -33140,6 +33140,27 @@ function getPercentOpen(zipCode){
 
 		var open = 0;
 		var total = 0;
+		var openNames = [];
+		var closedNames = [];
+
+	function alreadyNamed(nameIN){
+		var named = false;
+		for(var i in openNames){
+			if(nameIN === openNames[i]){
+				named = true;
+				break
+			}
+		}
+		if(!named){
+			for(var i in closedNames){
+			if(nameIN === closedNames[i]){
+				named = true;
+				break
+				}
+			}
+		}
+		return named;
+	}
 	
 	for(var j in types){
 		var urlStart = "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDT6IX-t-sA7_h8vc8CcaLvV5DhXPXwMvY&location=";
@@ -33152,18 +33173,28 @@ function getPercentOpen(zipCode){
 		var places = json_List.results;
 		console.log(places);
 
-		for(var i in places){ 
-			console.log(places[i].name);
-			if(places[i].hasOwnProperty('opening_hours')){
-				console.log(places[i].opening_hours.open_now);
-				if(places[i].opening_hours.open_now){
-					open++;
+		for(var i in places){
+			if(!alreadyNamed(places[i.name])){
+				//console.log(places[i].name);
+				if(places[i].hasOwnProperty('opening_hours')){
+					console.log(places[i].opening_hours.open_now);
+					if(places[i].opening_hours.open_now){
+						open++;
+						openNames.push(places[i].name)
+						} else{
+							closedNames.push(places[i].name);
+						}
+						total++;
 					}
-					total++;
 				}
 			}
 		}
+		console.log('----------open-----------');
+		console.log(openNames);
 		console.log(open);
+		console.log('----------closed-----------');
+		console.log(closedNames);
+		console.log('----------total-----------');
 		console.log(total);
 	return (open/total);
 	}
